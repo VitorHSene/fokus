@@ -11,9 +11,9 @@ const imagemIniciarOuPausarTexto = document.querySelector('.app__card-primary-bu
 const tempoNaTela = document.querySelector('#timer');
 
 const musicaFocoInput = document.querySelector('#alternar-musica');
-const musica = new Audio('/sons/luna-rise-part-one.mp3');
+const musica = new Audio('./sons/luna-rise-part-one.mp3');
 
-const audioplay = new Audio('.//sons/play.wav');
+const audioplay = new Audio('./sons/play.wav');
 const audiopause = new Audio('./sons/pause.mp3');
 const audiobeep = new Audio('./sons/beep.mp3');
 
