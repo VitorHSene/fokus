@@ -55,14 +55,14 @@ function alterarContexto(contexto){
     banner.setAttribute('src', `./imagens/${contexto}.png`);
     switch(contexto){
         case 'foco':
-            tempoDecorridoEmSegundos = 5;
+            tempoDecorridoEmSegundos = 1500;
             titulo.innerHTML = `
             Otimize sua produtividade,<br>
                 <strong class="app__title-strong">mergulhe no que importa.</strong>        
             `;
             break;
         case 'descanso-curto':
-            tempoDecorridoEmSegundos = 3;
+            tempoDecorridoEmSegundos = 300;
             titulo.innerHTML = `
                 Que tal dar uma respirada?<br>
                 <strong class="app__title-strong">Faça uma pausa curta!</strong>   
@@ -70,7 +70,7 @@ function alterarContexto(contexto){
             break;
             
         case 'descanso-longo':
-            tempoDecorridoEmSegundos = 10;
+            tempoDecorridoEmSegundos = 900;
             titulo.innerHTML = `
             Hora de voltar à superfície.<br>
             <strong class="app__title-strong">Faça uma pausa longa.</strong>
@@ -83,18 +83,22 @@ function alterarContexto(contexto){
 }
 
 const contagemRegressiva = () => {
-    if (tempoDecorridoEmSegundos <= 0){
-        audiobeep.play();
-        const focoAtivo = html.getAttribute('data-contexto') === 'foco'
-        if(focoAtivo){
-            const evento = new CustomEvent('FocoFinalizado')
-            document.dispatchEvent(evento);
+    if(tarefaSelecionada){
+        if (tempoDecorridoEmSegundos <= 0){
+            audiobeep.play();
+            const focoAtivo = html.getAttribute('data-contexto') === 'foco'
+            if(focoAtivo){
+                const evento = new CustomEvent('FocoFinalizado')
+                document.dispatchEvent(evento);
+            }
+            zerar();
+            return;
         }
-        zerar();
-        return;
+        tempoDecorridoEmSegundos -= 1;
+        mostrarTempo();
+    }else{
+        iniciarOuPausar();
     }
-    tempoDecorridoEmSegundos -= 1;
-    mostrarTempo();
 }
 
 startPauseBt.addEventListener('click', iniciarOuPausar);
@@ -112,6 +116,8 @@ function iniciarOuPausar(){
         iniciarOuPausarTexto.textContent = "Pausar";
     }else{
         alert("Selecione uma tarefa!");
+        zerar();
+        audiopause.play();
     }
 }
 
@@ -121,16 +127,16 @@ function zerar(){
     intervaloId = null;
     imagemIniciarOuPausarTexto.setAttribute('src', `./imagens/play_arrow.png`);
     
-    switch(html.data-contexto.value){
+    switch(html.getAttribute('data-contexto')){
         case 'foco':
-            tempoDecorridoEmSegundos = 5;
+            tempoDecorridoEmSegundos = 1500;
             break;
         case 'descanso-curto':
-            tempoDecorridoEmSegundos = 3;
+            tempoDecorridoEmSegundos = 300;
             break;
                 
         case 'descanso-longo':
-            tempoDecorridoEmSegundos = 10;
+            tempoDecorridoEmSegundos = 900;
             break;
         default:
             break;
