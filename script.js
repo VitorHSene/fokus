@@ -121,7 +121,8 @@ function zerar(){
     iniciarOuPausarTexto.textContent = "Começar";
     intervaloId = null;
     imagemIniciarOuPausarTexto.setAttribute('src', `./imagens/play_arrow.png`);
-    switch(contexto){
+    
+    switch(html.data-contexto.value){
         case 'foco':
             tempoDecorridoEmSegundos = 5;
             break;
