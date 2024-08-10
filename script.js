@@ -101,15 +101,19 @@ const contagemRegressiva = () => {
 startPauseBt.addEventListener('click', iniciarOuPausar);
 
 function iniciarOuPausar(){
-    if(intervaloId){
-        zerar();
-        audiopause.play();
-        return;
+    if(tarefaSelecionada){
+        if(intervaloId){
+            zerar();
+            audiopause.play();
+            return;
+        }
+        intervaloId = setInterval(contagemRegressiva, 1000);
+        audioplay.play();
+        imagemIniciarOuPausarTexto.setAttribute('src', `./imagens/pause.png`);
+        iniciarOuPausarTexto.textContent = "Pausar";
+    }else{
+        alert("Selecione uma tarefa!");
     }
-    intervaloId = setInterval(contagemRegressiva, 1000);
-    audioplay.play();
-    imagemIniciarOuPausarTexto.setAttribute('src', `./imagens/pause.png`);
-    iniciarOuPausarTexto.textContent = "Pausar";
 }
 
 function zerar(){
@@ -117,6 +121,20 @@ function zerar(){
     iniciarOuPausarTexto.textContent = "Começar";
     intervaloId = null;
     imagemIniciarOuPausarTexto.setAttribute('src', `./imagens/play_arrow.png`);
+    switch(contexto){
+        case 'foco':
+            tempoDecorridoEmSegundos = 5;
+            break;
+        case 'descanso-curto':
+            tempoDecorridoEmSegundos = 3;
+            break;
+                
+        case 'descanso-longo':
+            tempoDecorridoEmSegundos = 10;
+            break;
+        default:
+            break;
+        }
 }
 
 function mostrarTempo(){
